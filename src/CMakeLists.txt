@@ -14,7 +14,8 @@ target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_17)
 # specify compiler warning flags when building this project through
 # BUILD_INTERFACE generator expression
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
-target_compile_options(tutorial_compiler_flags INTERFACE 
+target_compile_options(tutorial_compiler_flags
+        INTERFACE 
         "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>")
 
 # executable target
@@ -37,8 +38,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
 target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS} tutorial_compiler_flags)
-target_include_directories(Tutorial PUBLIC 
-        "${PROJECT_BINARY_DIR}")
+target_include_directories(Tutorial PUBLIC "${PROJECT_BINARY_DIR}")
 
 # run install commands from the build directory
 # the --prefix option specifies the root path of the install location
@@ -46,8 +46,8 @@ target_include_directories(Tutorial PUBLIC
 install(TARGETS Tutorial DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)
 
-# enable_testing()
-include(CTest)
+include(CTest) # also support CDash
+enable_testing()
 
 # does the application run?
 add_test(NAME Runs COMMAND Tutorial 25)
@@ -81,6 +81,8 @@ set(CPACK_SOURCE_GENERATOR "TGZ")
 include(CPack)
 
 # install the configuration targets
+# the EXPORT generates a CMake file containing code to import all targets 
+# listed in the install command from the installation tree.
 install(EXPORT MathFunctionsTargets
         FILE MathFunctionsTargets.cmake
         DESTINATION lib/cmake/MathFunctions)
@@ -110,7 +112,7 @@ install(FILES
   DESTINATION lib/cmake/MathFunctions
   )
 
-# generate the export targets for the build tree
+# generate the export targets from the build tree
 # needs to be after the install(TARGETS) command
 export(EXPORT MathFunctionsTargets
   FILE "${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsTargets.cmake"

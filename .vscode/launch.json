@@ -1,16 +1,23 @@
 {
     "configurations": [
         {
-            "name": "C/C++: gcc build and debug active file",
+            "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": [],
+            // Resolved by CMake Tools:
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [ "28" ],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
+            "cwd": "${workspaceFolder}/build",
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "${env:PATH}:${command:cmake.getLaunchTargetDirectory}"
+                }
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -23,9 +30,8 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: gcc build active file",
-            "miDebuggerPath": "/usr/bin/gdb"
-        }
-    ],
+            "preLaunchTask": "CMake: build",
+    }
+],
     "version": "2.0.0"
 }

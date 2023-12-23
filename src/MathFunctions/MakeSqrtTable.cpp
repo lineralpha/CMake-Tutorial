@@ -13,11 +13,11 @@ int main(int argc, char* argv[])
     std::ofstream fout(argv[1], std::ios_base::out);
     const bool fileOpen = fout.is_open();
     if (fileOpen) {
-        fout << "double sqrtTable[] = {" << std::endl;
+        fout << "double sqrtTable[] = {";
         for (int i = 0; i < 10; i++) {
-            fout << sqrt(static_cast<double>(i)) << "," << std::endl;
+            fout << sqrt(static_cast<double>(i)) << ",";
         }
-        // close the table with a zero
+        // close the table with a zero (to make its syntax correct)
         fout << "0};" << std::endl;
         fout.close();
     }

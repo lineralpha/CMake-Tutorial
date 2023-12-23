@@ -3,8 +3,8 @@ include(MakeSqrtTable.cmake)
 
 add_library(MathFunctions MathFunctions.cpp mysqrt.cpp SqrtTable.h)
 
-# state that anybody linking to us needs to include the current source dir;
-# while MathFunctions itself doesn't
+# state that anybody linking to us needs to include the current source dir
+# to find MathFunctions.h, while MathFunctions itself doesn't
 target_include_directories(MathFunctions
         INTERFACE 
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -33,7 +33,7 @@ unset(HAVE_LOG)
 #     target_compile_definitions(MathFunctions PRIVATE "HAVE_LOG" "HAVE_EXP")
 # endif()
 
-
+# required to include SqrtTable.h
 target_include_directories(MathFunctions PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
 target_link_libraries(MathFunctions PUBLIC tutorial_compiler_flags)
 

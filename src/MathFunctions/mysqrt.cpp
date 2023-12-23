@@ -20,12 +20,14 @@ namespace mathfunctions
         #if defined(HAVE_LOG) && defined(HAVE_EXP)
             double result = std::exp(std::log(x) * 0.5);
             std::cout << "Computing sqrt of " << x << " to be " << result
-                      << " using math log and exp functions" << std::endl;
+                      << " using math log and exp functions"
+                      << std::endl;
         #else
             double result = x;
 
             if (x >= 1 && x < 10) {
-                std::cout << "Use the sqrt table to find initial value" << std::endl;
+                std::cout << "Use the sqrt table to find initial value"
+                          << std::endl;
                 result = sqrtTable[static_cast<int>(x)];
             }
 

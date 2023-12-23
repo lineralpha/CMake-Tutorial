@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/atoz/projects/cmake-tutorial/src"
+    "cmake.sourceDirectory": "${workspaceFolder}/src",
+    "cmake.generator": "Ninja"
 }

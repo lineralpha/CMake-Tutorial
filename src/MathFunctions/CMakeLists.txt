@@ -1,7 +1,7 @@
 # generate SqrtTable.h which is required by MathFunctions
 include(MakeSqrtTable.cmake)
 
-add_library(MathFunctions MathFunctions.cpp mysqrt.cpp SqrtTable.h)
+add_library(MathFunctions SHARED MathFunctions.cpp mysqrt.cpp SqrtTable.h)
 
 # state that anybody linking to us needs to include the current source dir
 # to find MathFunctions.h, while MathFunctions itself doesn't

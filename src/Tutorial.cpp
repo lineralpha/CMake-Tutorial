@@ -29,6 +29,7 @@ int main(int argc, char* argv[])
   #else
       const double outputValue = std::sqrt(inputValue);
   #endif
+
   std::cout << "The square root of " << inputValue << " is " << outputValue
             << std::endl;
   return EXIT_SUCCESS;

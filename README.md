@@ -2,9 +2,14 @@
 Learn CMake by following https://github.com/Kitware/CMake/tree/master/Help/guide/tutorial
 
 ## CMake project fundamentals
-- cmake_minimum_required()
-- project()
-- add_executable() / add_library()
+
+A very basic project contains these three lines in its `CMakeLists.txt` file:
+
+```cmake
+cmake_minimum_required(VERSION 3.28.0)
+project(Tutorial VERSION 1.0)
+add_executable(Tutorial tutorial.cpp) / add_library(Tutorial tutorial.cpp)
+```
 
 ### Build
 - cd to the build folder: <code>cd build</code>
@@ -21,7 +26,7 @@ Learn CMake by following https://github.com/Kitware/CMake/tree/master/Help/guide
     ```
 
 ### CTest
-- The simplest way to run tests is <code>ctest</code> :  
+- The simplest way to run tests is <code>ctest</code> :
     ```
     ctest -N
     ctest -V

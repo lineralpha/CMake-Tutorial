@@ -1,4 +1,5 @@
-// the configured options and settings for Tutorial
+// propagate CMake configuration options to source header file
+// @VAR@ is substituted by the value of ${VAR} in CMakeLists.txt
 #define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
 #define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
 // #cmakedefine USE_MYMATH

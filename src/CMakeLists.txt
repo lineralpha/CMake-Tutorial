@@ -1,8 +1,17 @@
 # policy settings: minimum version of CMake required
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.28.0)
 
 # define the project
-project(Tutorial VERSION 1.0)
+project(Tutorial VERSION 1.0 LANGUAGES C CXX)
+
+# optional - ensure build config options are visible to the user
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
+
+# optional - set default build config if none is given;
+# defaults to the first item from CMAKE_CONFIGURATION_TYPES if not set
+if(NOT DEFINED CMAKE_DEFAULT_BUILD_TYPE)
+    set(CMAKE_DEFAULT_BUILD_TYPE "Debug" CACHE STRING "Default build type" FORCE)
+endif()
 
 # d for debug build postfix
 set(CMAKE_DEBUG_POSTFIX d)
@@ -15,34 +24,57 @@ target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_17)
 # BUILD_INTERFACE generator expression
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 target_compile_options(tutorial_compiler_flags
-        INTERFACE 
-        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>")
+    INTERFACE
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Werror;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
+        $<$<CONFIG:Debug>:DDEBUG>
+        $<$<CONFIG:Release>:DNDEBUG>
+)
 
 # executable target
 add_executable(Tutorial Tutorial.cpp)
-set_target_properties(Tutorial PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+set_target_properties(Tutorial
+    PROPERTIES
+        DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX}
+)
 
 # use an option to decide which sqrt function is used
 option(USE_MYMATH "Use tutorial provided math implementation" ON)
+
+# configure a header file to pass CMake settings/options
+# the output file TutorialConfig.h will be written into build tree directory
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 if(USE_MYMATH)
-    # use this command instead of #cmakedefine 
+    # use this command instead of #cmakedefine
     target_compile_definitions(Tutorial PRIVATE "USE_MYMATH")
     add_subdirectory(MathFunctions)
     list(APPEND EXTRA_LIBS MathFunctions)
 endif()
 
+add_subdirectory(ArgParser)
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
-target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS} tutorial_compiler_flags)
-target_include_directories(Tutorial PUBLIC "${PROJECT_BINARY_DIR}")
+target_link_libraries(Tutorial
+    PUBLIC
+        ${EXTRA_LIBS}
+        $<TARGET_OBJECTS:ArgParser>
+        tutorial_compiler_flags
+)
+
+# add the binary tree to the list of paths to search for include files.
+# this is required because the generated TutorialConfig.h is in binary tree
+# target_include_directories(Tutorial
+#     PUBLIC
+#         "${PROJECT_BINARY_DIR}"
+# )
 
 # run install commands from the build directory
 # the --prefix option specifies the root path of the install location
 # cmake --install . --prefix "/home/atoz/installdir/"
+# or overwrite cache variable CMAKE_INSTALL_PREFIX
 install(TARGETS Tutorial DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)
 
@@ -81,7 +113,7 @@ set(CPACK_SOURCE_GENERATOR "TGZ")
 include(CPack)
 
 # install the configuration targets
-# the EXPORT generates a CMake file containing code to import all targets 
+# the EXPORT generates a CMake file containing code to import all targets
 # listed in the install command from the installation tree.
 install(EXPORT MathFunctionsTargets
         FILE MathFunctionsTargets.cmake

@@ -1,12 +1,14 @@
 # generate SqrtTable.h which is required by MathFunctions
 include(MakeSqrtTable.cmake)
 
+# build a shared libraray
+# BUILD_SHAREED_LIBS controls the default library type - SHARED or STATIC by default
 add_library(MathFunctions SHARED MathFunctions.cpp mysqrt.cpp SqrtTable.h)
 
 # state that anybody linking to us needs to include the current source dir
 # to find MathFunctions.h, while MathFunctions itself doesn't
 target_include_directories(MathFunctions
-        INTERFACE 
+        INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include>)
 
@@ -44,7 +46,7 @@ set_property(TARGET MathFunctions PROPERTY SOVERSION "1")
 # install rules
 set(installable_libs MathFunctions tutorial_compiler_flags)
 # also add export configuration (MathFunctionsTargets.cmake)
-install(TARGETS ${installable_libs} 
+install(TARGETS ${installable_libs}
         EXPORT MathFunctionsTargets
         DESTINATION lib)
 install(FILES MathFunctions.h DESTINATION include)

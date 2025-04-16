@@ -20,8 +20,15 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/License.txt")
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_SOURCE_GENERATOR "TGZ")
+
 # this module outputs the CPackConfig.cmake and CPackSourceConfig.cmake
 # to archive the source tree, run: cpack --config CPackSourceConfig.cmake
 include(CPack)
+include(CTest)
+
+# third party libraries
+find_package(spdlog REQUIRED)
+add_subdirectory(thirdParties)
 
 add_subdirectory(src)
+add_subdirectory(tests)

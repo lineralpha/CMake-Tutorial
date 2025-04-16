@@ -28,6 +28,7 @@ target_include_directories(Tutorial
 target_link_libraries(Tutorial
     PRIVATE
         ${EXTRA_LIBS}
+        spdlog::spdlog
         project_compiler_options
 )
 

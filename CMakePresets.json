@@ -1,0 +1,51 @@
+{
+  "$schema": "https://cmake.org/cmake/help/v3.28/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
+  "version": 8,
+  "include": [],
+  "configurePresets": [
+    {
+      "name": "common",
+      "hidden": true,
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "build/${presetName}",
+      "installDir": "build/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug (Ninja Multi-Config)",
+      "inherits": [
+        "common"
+      ]
+    },
+    {
+      "name": "release",
+      "displayName": "Release (Ninja Multi-Config)",
+      "inherits": [
+        "common"
+      ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "configurePreset": "debug",
+      "configuration": "Debug",
+      "targets": [
+        "all"
+      ]
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "configurePreset": "release",
+      "configuration": "Release",
+      "targets": [
+        "all"
+      ]
+    }
+  ]
+}

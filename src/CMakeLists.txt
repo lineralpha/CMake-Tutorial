@@ -30,3 +30,13 @@ target_link_libraries(Tutorial
         ${EXTRA_LIBS}
         project_compiler_options
 )
+
+# run install commands from the build directory
+# the --prefix option specifies the root path of the install location
+# cmake --install . --prefix "/home/atoz/installdir/"
+# or overwrite cache variable CMAKE_INSTALL_PREFIX
+install(TARGETS Tutorial DESTINATION bin)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/AppConfig.h"
+    DESTINATION include
+)

@@ -13,3 +13,7 @@ indent_style = space
 [{CMakeLists.txt,*.cmake}]
 indent_size = 4
 indent_style = space
+
+[*.json]
+indent_size = 4
+indent_style = space

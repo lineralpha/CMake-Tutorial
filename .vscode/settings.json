@@ -1,4 +1,5 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/src",
+    "cmake.sourceDirectory": "${workspaceFolder}",
+    "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.generator": "Ninja Multi-Config",
 }

@@ -1,8 +1,7 @@
-#include "mysqrt.h"
-
 #include <cmath>
 #include <iostream>
 
+#include "mysqrt.h"
 #include "SqrtTable.h"
 
 namespace mathfunctions

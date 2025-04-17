@@ -27,7 +27,7 @@ include(CPack)
 include(CTest)
 
 # third party libraries
-find_package(spdlog REQUIRED)
+# find_package(spdlog REQUIRED)
 add_subdirectory(thirdParties)
 
 add_subdirectory(src)

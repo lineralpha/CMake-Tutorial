@@ -1,0 +1,4 @@
+
+add_subdirectory(app_tests)
+add_subdirectory(factorial_tests)
+add_subdirectory(mathfunctions_tests)

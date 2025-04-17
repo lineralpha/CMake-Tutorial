@@ -1,61 +1,94 @@
 # CMake-Tutorial
 Learn CMake by following https://github.com/Kitware/CMake/tree/master/Help/guide/tutorial
 
+## Tools and VS Code extensions
+
+The following linux packages are required:
+
+- git
+- build-essential
+- gdb
+- cmake
+- cmake-qt-gui
+- ninja
+
+VS Code extensions:
+
+- `.vscode/extensions.json`
+
 ## CMake project fundamentals
-- cmake_minimum_required()
-- project()
-- add_executable() / add_library()
+
+A very basic project contains these three lines in its `CMakeLists.txt` file:
+
+```cmake
+cmake_minimum_required(VERSION 3.28.0)
+project(Tutorial VERSION 1.0)
+add_executable(Tutorial tutorial.cpp)
+```
+
+### Configure
+
+```
+cmake --preset debug
+```
 
 ### Build
-- cd to the build folder: <code>cd build</code>
-- run
-    ```
-    cmake ../src -DUSE_MYMATH=ON -DCMAKE_BUILD_TYPE=Debug
-    cmake --build .
-    ```
 
-### Install locally
-- cd to the build folder, use <code>--prefix</code> to specify the root path of install location:
-    ```
-    cmake --install . --prefix ~/installdir
-    ```
-
-### CTest
-- The simplest way to run tests is <code>ctest</code> :  
-    ```
-    ctest -N
-    ctest -V
-    ```
+```
+cmake --build --preset debug
+```
 
 ### CPack
-- run cpack command from the build directory:
+
+- to pack binary (run from build tree)
+
     ```
-    cpack
-    cpack -G ZIP -C Release
+    cpack -C Debug -G ZIP (run from build tree)
     ```
-- to archive the source tree:
+
+- to pack source tree (run from build tree):
+
     ```
     cpack --config CPackSourceConfig.cmake
     ```
-- to pack both debug and release together:
+
+### Install locally
+- run from build tree:
+
     ```
-    cpack --config ../src/MultiCPackConfig.cmake
+    cmake --build . --config Debug --target install
+    ```
+
+### CTest
+
+- The simplest way to run tests are (run from build tree):
+    ```
+    ctest -N  # list all tests
+    ctest -V
+    ctest -C Debug -T test --output-on-failure
     ```
 
 ## CMake Tools
+
 ### Select a CMake kit
-Command: <code>CMake:Select a Kit</code>
+
+Command: `CMake:Select a Kit`
 
 A kit is a toolchain - a set of compilers, linkers, or other tools that will be used to build your project. CMake Tools automatically scan the system and detect available toolchains.
 
-A project can define/provide additioal kits via its own <code>cmake-kits.json</code> file.
+A project can define/provide additional kits via its own `cmake-kits.json` file.
 
 ### Select variant
-Command: <code>CMake:Select a Variant</code>
 
-CMake Tools variants are more than CMake build types (CMAKE_BUILD_TYPE). A project can provide a custom cmake-variants.json / cmake-variants.yaml file for [additional variants](https://vector-of-bool.github.io/docs/vscode-cmake-tools/variants.html#what-does-it-look-like).
+Command: `CMake:Select a Variant`
+
+CMake Tools variants are more than CMake build types (CMAKE_BUILD_TYPE). A project can provide a custom cmake-variants.json / cmake-variants.yaml file for [additional variants][1].
 
 ### Configure project
-Command: <code>CMake:Configure</code>
+
+Command: `CMake:Configure`
 
 This runs CMake configure process, as well as populating the CMake Tools sidebar panel (Project Status).
+
+
+[1]: https://vector-of-bool.github.io/docs/vscode-cmake-tools/variants.html#what-does-it-look-like

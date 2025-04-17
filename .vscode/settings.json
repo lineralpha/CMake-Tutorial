@@ -3,11 +3,6 @@
         80,
         120
     ],
-    "files.associations": {
-      "*.gmnidb": "jsonc",
-      "iostream": "cpp",
-      "fstream": "cpp"
-    },
     // "cmake.sourceDirectory": "${workspaceFolder}",
     // "cmake.buildDirectory": "${workspaceFolder}/build",
     // "cmake.generator": "Ninja Multi-Config",

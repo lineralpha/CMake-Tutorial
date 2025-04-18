@@ -40,17 +40,15 @@ cmake --build --preset debug
 
 ### CPack
 
-- to pack binary (run from build tree)
+```
+cpack --preset
+```
 
-    ```
-    cpack -C Debug -G ZIP (run from build tree)
-    ```
+to pack source tree (run from build tree):
 
-- to pack source tree (run from build tree):
-
-    ```
-    cpack --config CPackSourceConfig.cmake
-    ```
+```
+cpack --config CPackSourceConfig.cmake
+```
 
 ### Install locally
 - run from build tree:
@@ -65,7 +63,7 @@ cmake --build --preset debug
     ```
     ctest -N  # list all tests
     ctest -V
-    ctest -C Debug -T test --output-on-failure
+    ctest --preset debug
     ```
 
 ## CMake Tools

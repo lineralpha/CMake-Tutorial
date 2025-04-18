@@ -9,6 +9,7 @@ include(cmake/CompilerOptions.cmake)
 
 # d for debug build postfix
 set(CMAKE_DEBUG_POSTFIX d)
+
 # set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/install")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")

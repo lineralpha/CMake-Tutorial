@@ -50,7 +50,7 @@ include(CMakePackageConfigHelpers)
 # so that find_package can find the targets
 # Note: INSTALL_DESTINATION here gives a hint on the path structure,
 # not necessary the actual path
-configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PackConfig.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/MathFunctionsConfig.cmake"
     INSTALL_DESTINATION "lib/cmake/example"
     NO_SET_AND_CHECK_MACRO
